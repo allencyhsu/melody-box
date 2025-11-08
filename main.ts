@@ -11,6 +11,9 @@ let isTimingDots = false
 let greyRainbow: Sprite = null
 let dot: Sprite = null
 let melodyBox: Sprite = null
+let axe: Sprite = null
+let consecutiveCorrectCoins = 0
+let consecutiveTimerStarted = false
 
 // --- HUD 介面變數 ---
 let hudSquare: Sprite = null
@@ -64,11 +67,36 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
         info.changeScoreBy(1)
         collectedOfTargetColor += 1
 
+        // --- 斧頭道具生成邏輯 ---
+        if (!consecutiveTimerStarted) {
+            consecutiveTimerStarted = true
+            consecutiveCorrectCoins = 1
+            // 8 秒後重置連續計數
+            setTimeout(function () {
+                consecutiveCorrectCoins = 0
+                consecutiveTimerStarted = false
+            }, 8000)
+        } else {
+            consecutiveCorrectCoins += 1
+        }
+
+        if (consecutiveCorrectCoins >= 2) {
+            axe = sprites.create(assets.image`斧頭`, SpriteKind.PowerUp)
+            placeSpriteOnRandomEmptyTile(axe, assets.tile`myTile`)
+            // 重置計數器
+            consecutiveCorrectCoins = 0
+            consecutiveTimerStarted = false
+        }
+        // --- 斧頭道具生成邏輯結束 ---
+
         // 如果收集滿 10 個，就挑選下一個目標顏色
         if (collectedOfTargetColor >= 10) {
             pickNewTargetColor()
         }
     } else {
+        // 吃到錯誤顏色的金幣
+        consecutiveCorrectCoins = 0
+        consecutiveTimerStarted = false
         game.gameOver(false)
     }
 
@@ -130,7 +158,7 @@ controller.moveSprite(melodyBox)
 // 設定 HUD
 hudSquare = sprites.create(hudImage)
 hudSquare.setFlag(SpriteFlag.RelativeToCamera, true)
-hudSquare.setPosition(8, 8)
+hudSquare.setPosition(0, 0)
 hudSquare.z = 100
 
 // 設定遊戲狀態
@@ -141,7 +169,7 @@ info.startCountdown(240)
 pickNewTargetColor()
 
 // 生成初始金幣 (稍微增加了數量以確保地圖上有足夠的各種顏色)
-for (let i = 0; i < 40; i++) {
+for (let i = 0; i < 60; i++) {
     let coinType = coinTypes._pickRandom()
     dot = sprites.create(coinType.image, SpriteKind.Food)
     dot.data["color"] = coinType.color
