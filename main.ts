@@ -25,6 +25,12 @@ let melodyBox = sprites.create(assets.image`腳色`, SpriteKind.Player)
 tiles.placeOnRandomTile(melodyBox, assets.tile`myTile`)
 scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
+let redSquareImg = image.create(12, 12)
+redSquareImg.fill(2)
+let redSquareSprite = sprites.create(redSquareImg)
+redSquareSprite.setFlag(SpriteFlag.RelativeToCamera, true)
+redSquareSprite.setPosition(8, 8)
+redSquareSprite.z = 100
 info.setScore(0)
 info.startCountdown(240)
 let coinTypes = [
