@@ -32,7 +32,7 @@ for (let index = 0; index <= 60; index++) {
     dot = sprites.create(assets.image`金幣綠`, SpriteKind.Food)
     dot = sprites.create(assets.image`金幣藍`, SpriteKind.Food)
     dot = sprites.create(assets.image`金幣殿`, SpriteKind.Food)
-    dot = sprites.create(assets.image`金幣紫`, SpriteKind.Player)
+    dot = sprites.create(assets.image`金幣紫`, SpriteKind.Food)
     tiles.placeOnRandomTile(dot, assets.tile`myTile`)
 }
 for (let index = 0; index <= 2; index++) {
