@@ -1,57 +1,82 @@
 {
-    "zvQ@yQZzWJs(58~ywD`B": {
+    "myImages.zvQ@yQZzWJs(58~ywD`B": {
+        "id": "myImages.zvQ@yQZzWJs(58~ywD`B",
         "data": "hwQQABAAAAAAAAAAAAAAAAAA8P//AAAAAAD//x8AAAAA8P8REQAAAAD/HxERAAAAAP8REQEAAAAAHxERAAAAAAAfEQAAAAAAAB8RAAAAAAAAHxEBAAAAAAD/EREAAAAAAP8fEREAAAAA8P8REQAAAAAA//8fAAAAAADw//8AAAAAAAAAAAAAAA==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "灰色彩虹"
     },
-    "7(JrtRble=E,)Uge@z,}": {
+    "myImages.7(JrtRble=E,)Uge@z,}": {
+        "id": "myImages.7(JrtRble=E,)Uge@z,}",
         "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAO7u7g4AAAAA7v/vDgAAAADu/+8OAAAAAO7/7w4AAAAA7v/vDgAAAADu7u4OAAAAAO7u7g4AAAAA7v/vDgAAAADu/+8OAAAAAO7/7w4AAAAA7v/vDgAAAADu7u4OAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "腳色"
     },
-    "image2": {
+    "myImages.image2": {
+        "id": "myImages.image2",
         "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMwMAAAAAADMzAwAAAAAAMzMDAAAAAAAzMwMAAAAAADPz////DwAAM/P///8PAAAz8////w8AADMzAwAAAAAAMzMDAAAAAAAzMwMAAAAAADMzAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "斧頭"
     },
-    "image3": {
+    "myImages.image3": {
+        "id": "myImages.image3",
         "data": "hwQQABAAAABERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERA==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "金幣橘"
     },
-    "image1": {
+    "myImages.image1": {
+        "id": "myImages.image1",
         "data": "hwQQABAAAAAiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIg==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "金幣紅"
     },
-    "image4": {
+    "myImages.image4": {
+        "id": "myImages.image4",
         "data": "hwQQABAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "金幣黃"
     },
-    "image5": {
+    "myImages.image5": {
+        "id": "myImages.image5",
         "data": "hwQQABAAAAB3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3dw==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "金幣綠"
     },
-    "image6": {
+    "myImages.image6": {
+        "id": "myImages.image6",
         "data": "hwQQABAAAACZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmQ==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "金幣藍"
     },
-    "image8": {
+    "myImages.image8": {
+        "id": "myImages.image8",
         "data": "hwQQABAAAACqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqg==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "金幣紫"
     },
-    "image7": {
+    "myImages.image7": {
+        "id": "myImages.image7",
         "data": "hwQQABAAAACIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiA==",
+        "dataEncoding": "base64",
+        "namespace": "myImages.",
         "mimeType": "image/x-mkcd-f4",
         "displayName": "金幣靛"
-    },
-    "*": {
-        "mimeType": "image/x-mkcd-f4",
-        "dataEncoding": "base64",
-        "namespace": "myImages"
     }
 }

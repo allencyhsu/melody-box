@@ -25,14 +25,17 @@ scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
 info.setScore(0)
 info.startCountdown(240)
-for (let index = 0; index <= 60; index++) {
-    dot = sprites.create(assets.image`金幣紅`, SpriteKind.Food)
-    dot = sprites.create(assets.image`金幣橘`, SpriteKind.Food)
-    dot = sprites.create(assets.image`金幣黃`, SpriteKind.Food)
-    dot = sprites.create(assets.image`金幣綠`, SpriteKind.Food)
-    dot = sprites.create(assets.image`金幣藍`, SpriteKind.Food)
-    dot = sprites.create(assets.image`金幣靛`, SpriteKind.Food)
-    dot = sprites.create(assets.image`金幣紫`, SpriteKind.Food)
+let coinImages = [
+    assets.image`金幣紅`,
+    assets.image`金幣橘`,
+    assets.image`金幣黃`,
+    assets.image`金幣綠`,
+    assets.image`金幣藍`,
+    assets.image`金幣靛`,
+    assets.image`金幣紫`
+]
+for (let index = 0; index <= 40; index++) {
+    dot = sprites.create(coinImages._pickRandom(), SpriteKind.Food)
     tiles.placeOnRandomTile(dot, assets.tile`myTile`)
 }
 for (let index = 0; index <= 2; index++) {
