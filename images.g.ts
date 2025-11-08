@@ -61,7 +61,7 @@ namespace myImages {
 . . . . . . . . . . . . . . . . 
 `;
             case "image3":
-            case "橘":return img`
+            case "金幣橘":return img`
 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 
 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 
 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 
@@ -80,7 +80,7 @@ namespace myImages {
 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 
 `;
             case "image1":
-            case "紅":return img`
+            case "金幣紅":return img`
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
@@ -99,7 +99,7 @@ namespace myImages {
 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 
 `;
             case "image4":
-            case "黃":return img`
+            case "金幣黃":return img`
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
@@ -118,7 +118,7 @@ namespace myImages {
 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 
 `;
             case "image5":
-            case "綠":return img`
+            case "金幣綠":return img`
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
@@ -137,7 +137,7 @@ namespace myImages {
 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
 `;
             case "image6":
-            case "dot blue":return img`
+            case "金幣藍":return img`
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
@@ -156,7 +156,7 @@ namespace myImages {
 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 9 
 `;
             case "image7":
-            case "dot殿":return img`
+            case "金幣殿":return img`
 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
@@ -175,7 +175,7 @@ namespace myImages {
 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 
 `;
             case "image8":
-            case "紫":return img`
+            case "金幣紫":return img`
 a a a a a a a a a a a a a a a a 
 a a a a a a a a a a a a a a a a 
 a a a a a a a a a a a a a a a a 
