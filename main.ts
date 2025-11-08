@@ -88,6 +88,25 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     game.gameOver(false)
 })
 
+scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
+    let wasMovingHorizontally = sprite.vx != 0
+    if (wasMovingHorizontally) {
+        sprite.vx = 0
+        if (Math.percentChance(50)) {
+            sprite.vy = 25
+        } else {
+            sprite.vy = -25
+        }
+    } else {
+        sprite.vy = 0
+        if (Math.percentChance(50)) {
+            sprite.vx = 25
+        } else {
+            sprite.vx = -25
+        }
+    }
+})
+
 // 遊戲勝利條件檢查
 game.onUpdateInterval(500, function () {
     // 注意：勝利條件可能需要根據新的遊戲機制調整，暫時保留
@@ -133,6 +152,12 @@ for (let i = 0; i < 40; i++) {
 for (let i = 0; i < 3; i++) {
     greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
     placeSpriteOnRandomEmptyTile(greyRainbow, assets.tile`myTile`)
+    // 初始給定水平速度
+    if (Math.percentChance(50)) {
+        greyRainbow.vx = 25
+    } else {
+        greyRainbow.vx = -25
+    }
 }
 
 // 按下 menu 按鈕可增加 10 個金幣
