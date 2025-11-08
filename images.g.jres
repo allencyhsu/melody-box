@@ -1,4 +1,24 @@
 {
+    "zvQ@yQZzWJs(58~ywD`B": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAA8P//AAAAAAD//x8AAAAA8P8REQAAAAD/HxERAAAAAP8REQEAAAAAHxERAAAAAAAfEQAAAAAAAB8RAAAAAAAAHxEBAAAAAAD/EREAAAAAAP8fEREAAAAA8P8REQAAAAAA//8fAAAAAADw//8AAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "灰色彩虹"
+    },
+    "7(JrtRble=E,)Uge@z,}": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAO7u7g4AAAAA7v/vDgAAAADu/+8OAAAAAO7/7w4AAAAA7v/vDgAAAADu7u4OAAAAAO7u7g4AAAAA7v/vDgAAAADu/+8OAAAAAO7/7w4AAAAA7v/vDgAAAADu7u4OAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "腳色"
+    },
+    "image1": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAACAiIiIiIgIAICIiIiIiAgAgIiIiIiICACAiIiIiIgIAICIiIiIiAgAgIiIiIiICACAiIiIiIgIAICIiIiIiAgAgIiIiIiICACAiIiIiIgIAICIiIiIiAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "dots"
+    },
+    "image2": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMwMAAAAAADMzAwAAAAAAMzMDAAAAAAAzMwMAAAAAADPz////DwAAM/P///8PAAAz8////w8AADMzAwAAAAAAMzMDAAAAAAAzMwMAAAAAADMzAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "斧頭"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

@@ -19,70 +19,19 @@ let isTimingDots = false
 let greyRainbow: Sprite = null
 let dot: Sprite = null
 tiles.setCurrentTilemap(tilemap`level2`)
-let melodyBox = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . e e e e e e e e e e e e . . 
-    . . e e e e e e e e e e e e . . 
-    . . e f f f f e e f f f f e . . 
-    . . e f f f f e e f f f f e . . 
-    . . e f f f f e e f f f f e . . 
-    . . e e e e e e e e e e e e . . 
-    . . e e e e e e e e e e e e . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
-tiles.placeOnRandomTile(melodyBox, assets.tile`transparency16`)
+let melodyBox = sprites.create(assets.image`腳色`, SpriteKind.Player)
+tiles.placeOnRandomTile(melodyBox, assets.tile`myTile`)
 scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
 info.setScore(0)
 info.startCountdown(240)
 for (let index = 0; index <= 60; index++) {
-    dot = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . 2 2 2 2 2 2 2 2 2 2 2 . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Food)
-    tiles.placeOnRandomTile(dot, assets.tile`transparency16`)
+    dot = sprites.create(assets.image`dots`, SpriteKind.Food)
+    tiles.placeOnRandomTile(dot, assets.tile`myTile`)
 }
 for (let index = 0; index <= 2; index++) {
-    greyRainbow = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . f f f f f f f f . . . . 
-        . . . f f f 1 1 1 1 f f f . . . 
-        . . f f f 1 1 1 1 1 1 f f f . . 
-        . f f f 1 1 1 1 1 1 1 1 f f f . 
-        . f f 1 1 1 1 . . 1 1 1 1 f f . 
-        . f f 1 1 1 1 . . . 1 1 1 f f . 
-        . f f 1 1 1 . . . . . 1 1 f f . 
-        . f 1 1 1 . . . . . . 1 1 1 f . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Enemy)
-    tiles.placeOnRandomTile(greyRainbow, assets.tile`transparency16`)
+    greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
+    tiles.placeOnRandomTile(greyRainbow, assets.tile`myTile`)
 }
 game.onUpdateInterval(500, function () {
     if (info.score() >= 55) {
