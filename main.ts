@@ -36,7 +36,8 @@ function pickNewTargetColor() {
     // 從不是當前目標的顏色中隨機挑選一個新顏色
     let newTargetType = coinTypes.filter(t => t.color !== targetColor)._pickRandom()
     targetColor = newTargetType.color
-    targetColorIndex = newTargetType.index
+    // 修正：確保 HUD 顏色和目標顏色一致
+    targetColorIndex = coinTypes.find(t => t.color === targetColor).index
     collectedOfTargetColor = 0
     hudImage.fill(targetColorIndex) // 更新 HUD 方塊的顏色
 }
@@ -117,3 +118,13 @@ for (let i = 0; i < 3; i++) {
     greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
     tiles.placeOnRandomTile(greyRainbow, assets.tile`myTile`)
 }
+
+// 按下 menu 按鈕可增加 10 個金幣
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    for (let i = 0; i < 10; i++) {
+        let coinType = coinTypes._pickRandom()
+        let newCoin = sprites.create(coinType.image, SpriteKind.Food)
+        newCoin.data["color"] = coinType.color
+        tiles.placeOnRandomTile(newCoin, assets.tile`myTile`)
+    }
+})
