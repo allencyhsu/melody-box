@@ -58,6 +58,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
         if (collectedOfTargetColor >= 10) {
             pickNewTargetColor()
         }
+    } else {
+        game.gameOver(false)
     }
 
     // 無論顏色是否匹配，都銷毀金幣
