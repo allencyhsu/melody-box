@@ -30,6 +30,16 @@ const coinTypes = [
 // --- 遊戲核心函式 ---
 
 /**
+ * 將指定 sprite 放置在一個隨機的空磁磚上
+ * @param sprite 要放置的 sprite
+ * @param tile 要放置在哪種類型的磁磚上
+ */
+function placeSpriteOnRandomEmptyTile(sprite: Sprite, tile: Image) {
+    tiles.placeOnRandomTile(sprite, tile)
+}
+
+
+/**
  * 挑選一個新的隨機目標顏色，並更新遊戲狀態和 HUD
  */
 function pickNewTargetColor() {
@@ -94,7 +104,7 @@ tiles.setCurrentTilemap(tilemap`level2`)
 
 // 設定玩家
 melodyBox = sprites.create(assets.image`腳色`, SpriteKind.Player)
-tiles.placeOnRandomTile(melodyBox, assets.tile`myTile`)
+placeSpriteOnRandomEmptyTile(melodyBox, assets.tile`myTile`)
 scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
 
@@ -116,13 +126,13 @@ for (let i = 0; i < 40; i++) {
     let coinType = coinTypes._pickRandom()
     dot = sprites.create(coinType.image, SpriteKind.Food)
     dot.data["color"] = coinType.color
-    tiles.placeOnRandomTile(dot, assets.tile`myTile`)
+    placeSpriteOnRandomEmptyTile(dot, assets.tile`myTile`)
 }
 
 // 生成敵人
 for (let i = 0; i < 3; i++) {
     greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
-    tiles.placeOnRandomTile(greyRainbow, assets.tile`myTile`)
+    placeSpriteOnRandomEmptyTile(greyRainbow, assets.tile`myTile`)
 }
 
 // 按下 menu 按鈕可增加 10 個金幣
@@ -131,6 +141,6 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
         let coinType = coinTypes._pickRandom()
         let newCoin = sprites.create(coinType.image, SpriteKind.Food)
         newCoin.data["color"] = coinType.color
-        tiles.placeOnRandomTile(newCoin, assets.tile`myTile`)
+        placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
     }
 })
