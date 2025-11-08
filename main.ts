@@ -22,8 +22,8 @@ const coinTypes = [
     { image: assets.image`金幣橘`, color: "orange", index: 4 },
     { image: assets.image`金幣黃`, color: "yellow", index: 5 },
     { image: assets.image`金幣綠`, color: "green", index: 7 },
-    { image: assets.image`金幣藍`, color: "blue", index: 8 },
-    { image: assets.image`金幣靛`, color: "indigo", index: 9 },
+    { image: assets.image`金幣藍`, color: "light blue", index: 9 },
+    { image: assets.image`金幣靛`, color: "blue", index: 8 },
     { image: assets.image`金幣紫`, color: "purple", index: 10 }
 ]
 
@@ -59,13 +59,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
             pickNewTargetColor()
         }
     }
-    
+
     // 無論顏色是否匹配，都銷毀金幣
     sprites.destroy(otherSprite)
 
     // (保留了原始程式碼中的計時邏輯)
     if (isTimingDots == true) {
-    	
+
     } else {
         isTimingDots = true
         dotsCollectedInTimeWindow = 0
