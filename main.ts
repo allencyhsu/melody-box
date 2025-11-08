@@ -5,8 +5,10 @@ info.onCountdownEnd(function () {
     game.gameOver(false)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    if (otherSprite.data["color"] == "red") {
+        info.changeScoreBy(1)
+    }
     sprites.destroy(otherSprite)
-    info.changeScoreBy(1)
     if (isTimingDots == true) {
     	
     } else {
@@ -25,17 +27,19 @@ scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
 info.setScore(0)
 info.startCountdown(240)
-let coinImages = [
-    assets.image`金幣紅`,
-    assets.image`金幣橘`,
-    assets.image`金幣黃`,
-    assets.image`金幣綠`,
-    assets.image`金幣藍`,
-    assets.image`金幣靛`,
-    assets.image`金幣紫`
+let coinTypes = [
+    { image: assets.image`金幣紅`, color: "red" },
+    { image: assets.image`金幣橘`, color: "orange" },
+    { image: assets.image`金幣黃`, color: "yellow" },
+    { image: assets.image`金幣綠`, color: "green" },
+    { image: assets.image`金幣藍`, color: "blue" },
+    { image: assets.image`金幣靛`, color: "indigo" },
+    { image: assets.image`金幣紫`, color: "purple" }
 ]
 for (let index = 0; index <= 40; index++) {
-    dot = sprites.create(coinImages._pickRandom(), SpriteKind.Food)
+    let coinType = coinTypes._pickRandom()
+    dot = sprites.create(coinType.image, SpriteKind.Food)
+    dot.data["color"] = coinType.color
     tiles.placeOnRandomTile(dot, assets.tile`myTile`)
 }
 for (let index = 0; index <= 2; index++) {
