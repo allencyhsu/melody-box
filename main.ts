@@ -105,7 +105,7 @@ info.startCountdown(240)
 pickNewTargetColor()
 
 // 生成初始金幣 (稍微增加了數量以確保地圖上有足夠的各種顏色)
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 40; i++) {
     let coinType = coinTypes._pickRandom()
     dot = sprites.create(coinType.image, SpriteKind.Food)
     dot.data["color"] = coinType.color
