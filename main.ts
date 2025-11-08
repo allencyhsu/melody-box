@@ -80,7 +80,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
             consecutiveCorrectCoins += 1
         }
 
-        if (consecutiveCorrectCoins >= 2) {
+        if (consecutiveCorrectCoins >= 5) {
             axe = sprites.create(assets.image`斧頭`, SpriteKind.PowerUp)
             placeSpriteOnRandomEmptyTile(axe, assets.tile`myTile`)
             // 重置計數器
@@ -114,6 +114,11 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.gameOver(false)
+})
+
+sprites.onOverlap(SpriteKind.Player, SpriteKind.PowerUp, function (sprite, otherSprite) {
+    otherSprite.destroy()
+    info.changeCountdownBy(20)
 })
 
 scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
@@ -158,7 +163,7 @@ controller.moveSprite(melodyBox)
 // 設定 HUD
 hudSquare = sprites.create(hudImage)
 hudSquare.setFlag(SpriteFlag.RelativeToCamera, true)
-hudSquare.setPosition(0, 0)
+hudSquare.setPosition(8, 8)
 hudSquare.z = 100
 
 // 設定遊戲狀態
@@ -169,7 +174,7 @@ info.startCountdown(240)
 pickNewTargetColor()
 
 // 生成初始金幣 (稍微增加了數量以確保地圖上有足夠的各種顏色)
-for (let i = 0; i < 60; i++) {
+for (let i = 0; i < 40; i++) {
     let coinType = coinTypes._pickRandom()
     dot = sprites.create(coinType.image, SpriteKind.Food)
     dot.data["color"] = coinType.color
