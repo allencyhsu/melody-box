@@ -74,6 +74,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     }
 })
 
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    game.gameOver(false)
+})
+
 // 遊戲勝利條件檢查
 game.onUpdateInterval(500, function () {
     // 注意：勝利條件可能需要根據新的遊戲機制調整，暫時保留
