@@ -271,8 +271,8 @@ function pickNewTargetColor() {
 function generateInitialCoins() {
     let targetIndex = coinColors.indexOf(targetColor)
     if (targetIndex != -1) {
-        // 生成 30 個目標顏色的金幣
-        for (let i = 0; i < 30; i++) {
+        // 生成 60 個目標顏色的金幣
+        for (let i = 0; i < 60; i++) {
             let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
             newCoin.data["color"] = coinColors[targetIndex]
             placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
@@ -466,7 +466,7 @@ melodyBox = sprites.create(img`
     ..................................................
     ..................................................
     `, SpriteKind.Player)
-melodyBox.scale = 0.7
+melodyBox.scale = 0.6
 placeSpriteOnRandomEmptyTile(melodyBox, assets.tile`myTile`)
 scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
