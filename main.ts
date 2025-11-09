@@ -146,7 +146,7 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
  */
 function goToLevel2() {
     currentLevel = 2
-    game.splash("Level 2", "Goal：Collect 62 coins in 270s")
+    game.splash("Level 2")
 
     // 清除所有現有金幣、敵人、道具
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
@@ -191,7 +191,7 @@ function goToLevel2() {
 game.onUpdateInterval(500, function () {
     if (currentLevel === 1) {
         if (info.score() >= 55) {
-            game.showLongText("Good！Enter Level 2！", DialogLayout.Bottom)
+            game.showLongText("Go to Level 2！", DialogLayout.Bottom)
             goToLevel2()
         }
     } else if (currentLevel === 2) {
