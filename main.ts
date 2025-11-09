@@ -206,6 +206,7 @@ for (let i = 0; i < 3; i++) {
 
 // 按下 menu 按鈕可增加金幣
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    info.changeScoreBy(10) // 新增功能：增加分數10分
     // 先生成五個指定顏色的金幣
     let targetCoinType = coinTypes.find(t => t.color === targetColor)
     if (targetCoinType) {
