@@ -1,5 +1,7 @@
 namespace SpriteKind {
     export const PowerUp = SpriteKind.create()
+    // 新增：為動畫角色建立一個獨立的 SpriteKind，避免與遊戲元素互動
+    export const UI = SpriteKind.create()
 }
 
 // --- 遊戲狀態變數 ---
@@ -14,24 +16,60 @@ let melodyBox: Sprite = null
 let axe: Sprite = null
 let consecutiveCorrectCoins = 0
 let consecutiveTimerStarted = false
-let currentLevel = 1 // 新增：追蹤當前遊戲關卡
+let currentLevel = 1
+let introMelodyBox: Sprite = null // 新增：動畫角色變數
 
 // --- HUD 介面變數 ---
 let hudSquare: Sprite = null
 let hudImage: Image = image.create(12, 12)
 
-// --- 金幣定義 (加入了顏色索引) ---
-const coinTypes = [
-    { image: assets.image`金幣紅`, color: "red", index: 2 },
-    { image: assets.image`金幣橘`, color: "orange", index: 4 },
-    { image: assets.image`金幣黃`, color: "yellow", index: 5 },
-    { image: assets.image`金幣綠`, color: "green", index: 7 },
-    { image: assets.image`金幣藍`, color: "light blue", index: 9 },
-    { image: assets.image`金幣靛`, color: "blue", index: 8 },
-    { image: assets.image`金幣紫`, color: "purple", index: 10 }
+// --- 金幣定義 (平行陣列) ---
+const coinImages = [
+    assets.image`金幣紅`,
+    assets.image`金幣橘`,
+    assets.image`金幣黃`,
+    assets.image`金幣綠`,
+    assets.image`金幣藍`,
+    assets.image`金幣靛`,
+    assets.image`金幣紫`
+]
+const coinColors = [
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "light blue",
+    "blue",
+    "purple"
+]
+const coinColorIndexes = [
+    2,
+    4,
+    5,
+    7,
+    9,
+    8,
+    10
 ]
 
 // --- 遊戲核心函式 ---
+
+/**
+ * 新增：開場動畫函式
+ * 創建一個角色，將其放大，然後銷毀。
+ */
+function playIntroAnimation() {
+    introMelodyBox = sprites.create(assets.image`腳色`, SpriteKind.UI)
+    introMelodyBox.setPosition(80, 60) // 螢幕中心
+    // 迴圈放大角色
+    for (let i = 0; i <= 20; i++) {
+        introMelodyBox.scale = i * 0.2 // 調整放大速率，使其更平滑
+        pause(50) // 縮短暫停時間，讓動畫更快
+    }
+    pause(200) // 放大後稍作停留
+    introMelodyBox.destroy()
+}
+
 
 /**
  * 將指定 sprite 放置在一個隨機的空磁磚上
@@ -42,18 +80,19 @@ function placeSpriteOnRandomEmptyTile(sprite: Sprite, tile: Image) {
     tiles.placeOnRandomTile(sprite, tile)
 }
 
-
 /**
  * 挑選一個新的隨機目標顏色，並更新遊戲狀態和 HUD
  */
 function pickNewTargetColor() {
-    // 從不是當前目標的顏色中隨機挑選一個新顏色
-    let newTargetType = coinTypes.filter(t => t.color !== targetColor)._pickRandom()
-    targetColor = newTargetType.color
-    // 修正：確保 HUD 顏色和目標顏色一致
-    targetColorIndex = coinTypes.find(t => t.color === targetColor).index
+    let newTargetIndex = 0
+    let currentTargetIndex = coinColors.indexOf(targetColor)
+    do {
+        newTargetIndex = randint(0, coinColors.length - 1)
+    } while (newTargetIndex == currentTargetIndex)
+    targetColor = coinColors[newTargetIndex]
+    targetColorIndex = coinColorIndexes[newTargetIndex]
     collectedOfTargetColor = 0
-    hudImage.fill(targetColorIndex) // 更新 HUD 方塊的顏色
+    hudImage.fill(targetColorIndex)
 }
 
 // 倒數計時結束
@@ -63,16 +102,12 @@ info.onCountdownEnd(function () {
 
 // 玩家與金幣的碰撞事件
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-    // 檢查吃到的金幣是否為目標顏色
     if (otherSprite.data["color"] == targetColor) {
         info.changeScoreBy(1)
         collectedOfTargetColor += 1
-
-        // --- 斧頭道具生成邏輯 ---
         if (!consecutiveTimerStarted) {
             consecutiveTimerStarted = true
             consecutiveCorrectCoins = 1
-            // 8 秒後重置連續計數
             setTimeout(function () {
                 consecutiveCorrectCoins = 0
                 consecutiveTimerStarted = false
@@ -80,33 +115,22 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
         } else {
             consecutiveCorrectCoins += 1
         }
-
         if (consecutiveCorrectCoins >= 5) {
             axe = sprites.create(assets.image`斧頭`, SpriteKind.PowerUp)
             placeSpriteOnRandomEmptyTile(axe, assets.tile`myTile`)
-            // 重置計數器
             consecutiveCorrectCoins = 0
             consecutiveTimerStarted = false
         }
-        // --- 斧頭道具生成邏輯結束 ---
-
-        // 如果收集滿 10 個，就挑選下一個目標顏色
         if (collectedOfTargetColor >= 10) {
             pickNewTargetColor()
         }
     } else {
-        // 吃到錯誤顏色的金幣
         consecutiveCorrectCoins = 0
         consecutiveTimerStarted = false
         game.gameOver(false)
     }
-
-    // 無論顏色是否匹配，都銷毀金幣
     sprites.destroy(otherSprite)
-
-    // (保留了原始程式碼中的計時邏輯)
     if (isTimingDots == true) {
-
     } else {
         isTimingDots = true
         dotsCollectedInTimeWindow = 0
@@ -126,18 +150,10 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
     let wasMovingHorizontally = sprite.vx != 0
     if (wasMovingHorizontally) {
         sprite.vx = 0
-        if (Math.percentChance(50)) {
-            sprite.vy = 25
-        } else {
-            sprite.vy = -25
-        }
+        sprite.vy = Math.percentChance(50) ? 25 : -25
     } else {
         sprite.vy = 0
-        if (Math.percentChance(50)) {
-            sprite.vx = 25
-        } else {
-            sprite.vx = -25
-        }
+        sprite.vx = Math.percentChance(50) ? 25 : -25
     }
 })
 
@@ -147,43 +163,25 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
 function goToLevel2() {
     currentLevel = 2
     game.splash("Level 2")
-
-    // 清除所有現有金幣、敵人、道具
     sprites.destroyAllSpritesOfKind(SpriteKind.Food)
     sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
     sprites.destroyAllSpritesOfKind(SpriteKind.PowerUp)
-
-    // 設定地圖為 Level 2
     tiles.setCurrentTilemap(tilemap`level2`)
-    //tiles.setWall(myTiles.tile1, true) // 設定 Level 2 的牆壁
-
-    // 重置玩家位置
     placeSpriteOnRandomEmptyTile(melodyBox, assets.tile`myTile`)
-    scene.cameraFollowSprite(melodyBox) // Ensure camera follows after reset
-
-    // 重置遊戲狀態
+    scene.cameraFollowSprite(melodyBox)
     info.setScore(0)
-    info.startCountdown(270) // 4.5 minutes = 270 seconds
-    pickNewTargetColor() // 挑選新的目標顏色
-
-    // 生成 Level 2 的金幣 (62個隨機金幣)
+    info.startCountdown(270)
+    pickNewTargetColor()
     for (let i = 0; i < 62; i++) {
-        let coinType = coinTypes._pickRandom()
-        let newCoin = sprites.create(coinType.image, SpriteKind.Food)
-        newCoin.data["color"] = coinType.color
+        let randomIndex = randint(0, coinColors.length - 1)
+        let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
+        newCoin.data["color"] = coinColors[randomIndex]
         placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
     }
-
-    // 生成 Level 2 的敵人 (沿用 Level 1 的邏輯)
     for (let i = 0; i < 3; i++) {
         greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
         placeSpriteOnRandomEmptyTile(greyRainbow, assets.tile`myTile`)
-        // 初始給定水平速度
-        if (Math.percentChance(50)) {
-            greyRainbow.vx = 25
-        } else {
-            greyRainbow.vx = -25
-        }
+        greyRainbow.vx = Math.percentChance(50) ? 25 : -25
     }
 }
 
@@ -195,15 +193,16 @@ game.onUpdateInterval(500, function () {
             goToLevel2()
         }
     } else if (currentLevel === 2) {
-        // Level 2 win condition: 62 coins collected
         if (info.score() >= 62) {
-            game.gameOver(true) // Player wins Level 2
+            game.gameOver(true)
         }
     }
 })
 
-
 // --- 遊戲初始化 ---
+
+// 新增：在遊戲開始時呼叫開場動畫
+playIntroAnimation()
 
 // 設定地圖
 tiles.setCurrentTilemap(tilemap`level1`)
@@ -228,56 +227,46 @@ info.startCountdown(240)
 pickNewTargetColor()
 
 // 生成初始金幣
-
-let targetCoinType = coinTypes.find(t => t.color === targetColor)
-if (targetCoinType) {
-    // 先生成 10 個指定顏色的金幣
+let targetIndex = coinColors.indexOf(targetColor)
+if (targetIndex != -1) {
     for (let i = 0; i < 10; i++) {
-        let newCoin = sprites.create(targetCoinType.image, SpriteKind.Food)
-        newCoin.data["color"] = targetCoinType.color
+        let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
+        newCoin.data["color"] = coinColors[targetIndex]
         placeSpriteOnRandomEmptyTile(newCoin, myTiles.transparency16)
     }
-
-    // 再隨機生成 10 個不同顏色的金幣
-    let otherCoinTypes = coinTypes.filter(t => t.color !== targetColor)
     for (let i = 0; i < 10; i++) {
-        let coinType = otherCoinTypes._pickRandom()
-        let newCoin = sprites.create(coinType.image, SpriteKind.Food)
-        newCoin.data["color"] = coinType.color
+        let randomIndex = 0
+        do {
+            randomIndex = randint(0, coinColors.length - 1)
+        } while (randomIndex == targetIndex)
+        let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
+        newCoin.data["color"] = coinColors[randomIndex]
         placeSpriteOnRandomEmptyTile(newCoin, myTiles.transparency16)
     }
+}
 
-    // 生成敵人
-    for (let i = 0; i < 3; i++) {
-        greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
-        placeSpriteOnRandomEmptyTile(greyRainbow, myTiles.transparency16)
-        // 初始給定水平速度
-        if (Math.percentChance(50)) {
-            greyRainbow.vx = 25
-        } else {
-            greyRainbow.vx = -25
-        }
-    }
+// 生成敵人
+for (let i = 0; i < 3; i++) {
+    greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
+    placeSpriteOnRandomEmptyTile(greyRainbow, myTiles.transparency16)
+    greyRainbow.vx = Math.percentChance(50) ? 25 : -25
 }
 
 // 按下 menu 按鈕可增加金幣
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    info.changeScoreBy(10) // 新增功能：增加分數10分
-    // 先生成五個指定顏色的金幣
-    let targetCoinType = coinTypes.find(t => t.color === targetColor)
-    if (targetCoinType) {
+    info.changeScoreBy(10)
+    let targetIndex = coinColors.indexOf(targetColor)
+    if (targetIndex != -1) {
         for (let i = 0; i < 5; i++) {
-            let newCoin = sprites.create(targetCoinType.image, SpriteKind.Food)
-            newCoin.data["color"] = targetCoinType.color
+            let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
+            newCoin.data["color"] = coinColors[targetIndex]
             placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
         }
     }
-    // 再生成五個不同顏色的金幣
-    let otherCoinTypes = coinTypes.filter(t => t.color !== targetColor)
     for (let i = 0; i < 5; i++) {
-        let coinType = otherCoinTypes._pickRandom()
-        let newCoin = sprites.create(coinType.image, SpriteKind.Food)
-        newCoin.data["color"] = coinType.color
+        let randomIndex = randint(0, coinColors.length - 1)
+        let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
+        newCoin.data["color"] = coinColors[randomIndex]
         placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
     }
 })
