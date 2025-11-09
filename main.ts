@@ -25,14 +25,7 @@ let hudImage: Image = image.create(12, 12)
 
 // --- 金幣定義 (平行陣列) ---
 const coinImages = [
-    // assets.image`金幣紅`,
-    // assets.image`金幣橘`,
-    // assets.image`金幣黃`,
-    // assets.image`金幣綠`,
-    // assets.image`金幣藍`,
-    // assets.image`金幣靛`,
-    // assets.image`金幣紫`
-img`
+    img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -50,7 +43,7 @@ img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     `,
-img`
+    img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -68,7 +61,7 @@ img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     `,
-img`
+    img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -86,7 +79,7 @@ img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     `,
-img`
+    img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -104,7 +97,7 @@ img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     `,
-img`
+    img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -122,7 +115,7 @@ img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     `,
-img`
+    img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -140,7 +133,7 @@ img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     `,
-img`
+    img`
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . .
@@ -160,22 +153,22 @@ img`
     `
 ]
 const coinColors = [
+    "red",
     "orange",
     "yellow",
     "green",
     "light blue",
     "teal",
-    "purple",
-    "black"
+    "purple"
 ]
 const coinColorIndexes = [
+    2,
     4,
     5,
     7,
     9,
     6,
-    10,
-    15
+    10
 ]
 
 // --- 遊戲核心函式 ---
@@ -272,9 +265,16 @@ function pickNewTargetColor() {
     hudImage.fill(targetColorIndex)
 }
 
+function showGameOverAnimation() {
+    game.splash("High Score:" + info.score())
+    game.setGameOverScoringType(game.ScoringType.HighScore)
+    game.gameOver(false)
+}
+
 // 倒數計時結束
 info.onCountdownEnd(function () {
-    game.gameOver(false)
+    // game.gameOver(false)
+    showGameOverAnimation()
 })
 
 // 玩家與金幣的碰撞事件
@@ -304,7 +304,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     } else {
         consecutiveCorrectCoins = 0
         consecutiveTimerStarted = false
-        game.gameOver(false)
+        //game.gameOver(false)
+        showGameOverAnimation()
     }
     sprites.destroy(otherSprite)
     if (isTimingDots == true) {
@@ -315,7 +316,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    game.gameOver(false)
+    // game.gameOver(false)
+    showGameOverAnimation()
 })
 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.PowerUp, function (sprite, otherSprite) {
@@ -353,7 +355,7 @@ function goToLevel2() {
     // 生成初始金幣
     let targetIndex = coinColors.indexOf(targetColor)
     if (targetIndex != -1) {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 30; i++) {
             let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
             newCoin.data["color"] = coinColors[targetIndex]
             placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
@@ -452,6 +454,7 @@ melodyBox = sprites.create(img`
     ..................................................
     ..................................................
     `, SpriteKind.Player)
+melodyBox.scale = 0.7
 placeSpriteOnRandomEmptyTile(melodyBox, assets.tile`myTile`)
 scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
@@ -472,7 +475,7 @@ pickNewTargetColor()
 // 生成初始金幣
 let targetIndex = coinColors.indexOf(targetColor)
 if (targetIndex != -1) {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
         let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
         newCoin.data["color"] = coinColors[targetIndex]
         placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
