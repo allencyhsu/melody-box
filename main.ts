@@ -14,6 +14,7 @@ let melodyBox: Sprite = null
 let axe: Sprite = null
 let consecutiveCorrectCoins = 0
 let consecutiveTimerStarted = false
+let currentLevel = 1 // 新增：追蹤當前遊戲關卡
 
 // --- HUD 介面變數 ---
 let hudSquare: Sprite = null
@@ -140,11 +141,64 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
     }
 })
 
+/**
+ * 轉換到第二關
+ */
+function goToLevel2() {
+    currentLevel = 2
+    game.splash("Level 2", "Goal：Collect 62 coins in 270s")
+
+    // 清除所有現有金幣、敵人、道具
+    sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+    sprites.destroyAllSpritesOfKind(SpriteKind.Enemy)
+    sprites.destroyAllSpritesOfKind(SpriteKind.PowerUp)
+
+    // 設定地圖為 Level 2
+    tiles.setCurrentTilemap(tilemap`level2`)
+    //tiles.setWall(myTiles.tile1, true) // 設定 Level 2 的牆壁
+
+    // 重置玩家位置
+    placeSpriteOnRandomEmptyTile(melodyBox, assets.tile`myTile`)
+    scene.cameraFollowSprite(melodyBox) // Ensure camera follows after reset
+
+    // 重置遊戲狀態
+    info.setScore(0)
+    info.startCountdown(270) // 4.5 minutes = 270 seconds
+    pickNewTargetColor() // 挑選新的目標顏色
+
+    // 生成 Level 2 的金幣 (62個隨機金幣)
+    for (let i = 0; i < 62; i++) {
+        let coinType = coinTypes._pickRandom()
+        let newCoin = sprites.create(coinType.image, SpriteKind.Food)
+        newCoin.data["color"] = coinType.color
+        placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+    }
+
+    // 生成 Level 2 的敵人 (沿用 Level 1 的邏輯)
+    for (let i = 0; i < 3; i++) {
+        greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
+        placeSpriteOnRandomEmptyTile(greyRainbow, assets.tile`myTile`)
+        // 初始給定水平速度
+        if (Math.percentChance(50)) {
+            greyRainbow.vx = 25
+        } else {
+            greyRainbow.vx = -25
+        }
+    }
+}
+
 // 遊戲勝利條件檢查
 game.onUpdateInterval(500, function () {
-    // 注意：勝利條件可能需要根據新的遊戲機制調整，暫時保留
-    if (info.score() >= 55) {
-        game.gameOver(true)
+    if (currentLevel === 1) {
+        if (info.score() >= 55) {
+            game.showLongText("Good！Enter Level 2！", DialogLayout.Bottom)
+            goToLevel2()
+        }
+    } else if (currentLevel === 2) {
+        // Level 2 win condition: 62 coins collected
+        if (info.score() >= 62) {
+            game.gameOver(true) // Player wins Level 2
+        }
     }
 })
 
@@ -152,11 +206,11 @@ game.onUpdateInterval(500, function () {
 // --- 遊戲初始化 ---
 
 // 設定地圖
-tiles.setCurrentTilemap(tilemap`level2`)
+tiles.setCurrentTilemap(tilemap`level1`)
 
 // 設定玩家
 melodyBox = sprites.create(assets.image`腳色`, SpriteKind.Player)
-placeSpriteOnRandomEmptyTile(melodyBox, assets.tile`myTile`)
+placeSpriteOnRandomEmptyTile(melodyBox, myTiles.transparency16)
 scene.cameraFollowSprite(melodyBox)
 controller.moveSprite(melodyBox)
 
@@ -174,33 +228,35 @@ info.startCountdown(240)
 pickNewTargetColor()
 
 // 生成初始金幣
-// 先生成 10 個指定顏色的金幣
+
 let targetCoinType = coinTypes.find(t => t.color === targetColor)
 if (targetCoinType) {
+    // 先生成 10 個指定顏色的金幣
     for (let i = 0; i < 10; i++) {
         let newCoin = sprites.create(targetCoinType.image, SpriteKind.Food)
         newCoin.data["color"] = targetCoinType.color
-        placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+        placeSpriteOnRandomEmptyTile(newCoin, myTiles.transparency16)
     }
-}
-// 再隨機生成 10 個不同顏色的金幣
-let otherCoinTypes = coinTypes.filter(t => t.color !== targetColor)
-for (let i = 0; i < 10; i++) {
-    let coinType = otherCoinTypes._pickRandom()
-    let newCoin = sprites.create(coinType.image, SpriteKind.Food)
-    newCoin.data["color"] = coinType.color
-    placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
-}
 
-// 生成敵人
-for (let i = 0; i < 3; i++) {
-    greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
-    placeSpriteOnRandomEmptyTile(greyRainbow, assets.tile`myTile`)
-    // 初始給定水平速度
-    if (Math.percentChance(50)) {
-        greyRainbow.vx = 25
-    } else {
-        greyRainbow.vx = -25
+    // 再隨機生成 10 個不同顏色的金幣
+    let otherCoinTypes = coinTypes.filter(t => t.color !== targetColor)
+    for (let i = 0; i < 10; i++) {
+        let coinType = otherCoinTypes._pickRandom()
+        let newCoin = sprites.create(coinType.image, SpriteKind.Food)
+        newCoin.data["color"] = coinType.color
+        placeSpriteOnRandomEmptyTile(newCoin, myTiles.transparency16)
+    }
+
+    // 生成敵人
+    for (let i = 0; i < 3; i++) {
+        greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
+        placeSpriteOnRandomEmptyTile(greyRainbow, myTiles.transparency16)
+        // 初始給定水平速度
+        if (Math.percentChance(50)) {
+            greyRainbow.vx = 25
+        } else {
+            greyRainbow.vx = -25
+        }
     }
 }
 
