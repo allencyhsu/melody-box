@@ -172,12 +172,26 @@ function goToLevel2() {
     info.setScore(0)
     info.startCountdown(270)
     pickNewTargetColor()
-    for (let i = 0; i < 62; i++) {
-        let randomIndex = randint(0, coinColors.length - 1)
-        let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
-        newCoin.data["color"] = coinColors[randomIndex]
-        placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+
+    // 生成初始金幣
+    let targetIndex = coinColors.indexOf(targetColor)
+    if (targetIndex != -1) {
+        for (let i = 0; i < 10; i++) {
+            let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
+            newCoin.data["color"] = coinColors[targetIndex]
+            placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+        }
+        for (let i = 0; i < 10; i++) {
+            let randomIndex = 0
+            do {
+                randomIndex = randint(0, coinColors.length - 1)
+            } while (randomIndex == targetIndex)
+            let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
+            newCoin.data["color"] = coinColors[randomIndex]
+            placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+        }
     }
+
     for (let i = 0; i < 3; i++) {
         greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
         placeSpriteOnRandomEmptyTile(greyRainbow, assets.tile`myTile`)
@@ -252,8 +266,8 @@ for (let i = 0; i < 3; i++) {
     greyRainbow.vx = Math.percentChance(50) ? 25 : -25
 }
 
-// 按下 menu 按鈕可增加金幣
-controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+// 按下 B 按鈕可增加金幣
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     info.changeScoreBy(10)
     let targetIndex = coinColors.indexOf(targetColor)
     if (targetIndex != -1) {
