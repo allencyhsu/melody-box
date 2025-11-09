@@ -265,6 +265,31 @@ function pickNewTargetColor() {
     hudImage.fill(targetColorIndex)
 }
 
+/**
+ * 【新函式】生成初始金幣
+ */
+function generateInitialCoins() {
+    let targetIndex = coinColors.indexOf(targetColor)
+    if (targetIndex != -1) {
+        // 生成 30 個目標顏色的金幣
+        for (let i = 0; i < 30; i++) {
+            let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
+            newCoin.data["color"] = coinColors[targetIndex]
+            placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+        }
+        // 生成 10 個其他隨機顏色的金幣
+        for (let i = 0; i < 10; i++) {
+            let randomIndex = 0
+            do {
+                randomIndex = randint(0, coinColors.length - 1)
+            } while (randomIndex == targetIndex)
+            let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
+            newCoin.data["color"] = coinColors[randomIndex]
+            placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+        }
+    }
+}
+
 function showGameOverAnimation() {
     game.splash("High Score:" + info.score())
     game.setGameOverScoringType(game.ScoringType.HighScore)
@@ -273,7 +298,6 @@ function showGameOverAnimation() {
 
 // 倒數計時結束
 info.onCountdownEnd(function () {
-    // game.gameOver(false)
     showGameOverAnimation()
 })
 
@@ -298,13 +322,18 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
             consecutiveCorrectCoins = 0
             consecutiveTimerStarted = false
         }
+        // 【修改處】當吃到10個目標金幣時
         if (collectedOfTargetColor >= 10) {
+            // 1. 清除所有金幣
+            sprites.destroyAllSpritesOfKind(SpriteKind.Food)
+            // 2. 挑選新目標顏色 (此函式會重置 collectedOfTargetColor)
             pickNewTargetColor()
+            // 3. 重新生成金幣
+            generateInitialCoins()
         }
     } else {
         consecutiveCorrectCoins = 0
         consecutiveTimerStarted = false
-        //game.gameOver(false)
         showGameOverAnimation()
     }
     sprites.destroy(otherSprite)
@@ -316,7 +345,6 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 })
 
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    // game.gameOver(false)
     showGameOverAnimation()
 })
 
@@ -352,24 +380,8 @@ function goToLevel2() {
     info.startCountdown(270)
     pickNewTargetColor()
 
-    // 生成初始金幣
-    let targetIndex = coinColors.indexOf(targetColor)
-    if (targetIndex != -1) {
-        for (let i = 0; i < 30; i++) {
-            let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
-            newCoin.data["color"] = coinColors[targetIndex]
-            placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
-        }
-        for (let i = 0; i < 10; i++) {
-            let randomIndex = 0
-            do {
-                randomIndex = randint(0, coinColors.length - 1)
-            } while (randomIndex == targetIndex)
-            let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
-            newCoin.data["color"] = coinColors[randomIndex]
-            placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
-        }
-    }
+    // 【修改處】呼叫函式生成金幣
+    generateInitialCoins()
 
     for (let i = 0; i < 3; i++) {
         greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
@@ -472,24 +484,8 @@ info.startCountdown(240)
 // 設定第一個目標顏色
 pickNewTargetColor()
 
-// 生成初始金幣
-let targetIndex = coinColors.indexOf(targetColor)
-if (targetIndex != -1) {
-    for (let i = 0; i < 30; i++) {
-        let newCoin = sprites.create(coinImages[targetIndex], SpriteKind.Food)
-        newCoin.data["color"] = coinColors[targetIndex]
-        placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
-    }
-    for (let i = 0; i < 10; i++) {
-        let randomIndex = 0
-        do {
-            randomIndex = randint(0, coinColors.length - 1)
-        } while (randomIndex == targetIndex)
-        let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
-        newCoin.data["color"] = coinColors[randomIndex]
-        placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
-    }
-}
+// 【修改處】呼叫函式生成金幣
+generateInitialCoins()
 
 // 生成敵人
 for (let i = 0; i < 3; i++) {
@@ -531,10 +527,4 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
         }
     }
-    // for (let i = 0; i < 5; i++) {
-    //     let randomIndex = randint(0, coinColors.length - 1)
-    //     let newCoin = sprites.create(coinImages[randomIndex], SpriteKind.Food)
-    //     newCoin.data["color"] = coinColors[randomIndex]
-    //     placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
-    // }
 })
