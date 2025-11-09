@@ -173,12 +173,23 @@ info.startCountdown(240)
 // 設定第一個目標顏色
 pickNewTargetColor()
 
-// 生成初始金幣 (稍微增加了數量以確保地圖上有足夠的各種顏色)
-for (let i = 0; i < 40; i++) {
-    let coinType = coinTypes._pickRandom()
-    dot = sprites.create(coinType.image, SpriteKind.Food)
-    dot.data["color"] = coinType.color
-    placeSpriteOnRandomEmptyTile(dot, assets.tile`myTile`)
+// 生成初始金幣
+// 先生成 10 個指定顏色的金幣
+let targetCoinType = coinTypes.find(t => t.color === targetColor)
+if (targetCoinType) {
+    for (let i = 0; i < 10; i++) {
+        let newCoin = sprites.create(targetCoinType.image, SpriteKind.Food)
+        newCoin.data["color"] = targetCoinType.color
+        placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+    }
+}
+// 再隨機生成 10 個不同顏色的金幣
+let otherCoinTypes = coinTypes.filter(t => t.color !== targetColor)
+for (let i = 0; i < 10; i++) {
+    let coinType = otherCoinTypes._pickRandom()
+    let newCoin = sprites.create(coinType.image, SpriteKind.Food)
+    newCoin.data["color"] = coinType.color
+    placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
 }
 
 // 生成敵人
@@ -193,10 +204,21 @@ for (let i = 0; i < 3; i++) {
     }
 }
 
-// 按下 menu 按鈕可增加 10 個金幣
+// 按下 menu 按鈕可增加金幣
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    for (let i = 0; i < 10; i++) {
-        let coinType = coinTypes._pickRandom()
+    // 先生成五個指定顏色的金幣
+    let targetCoinType = coinTypes.find(t => t.color === targetColor)
+    if (targetCoinType) {
+        for (let i = 0; i < 5; i++) {
+            let newCoin = sprites.create(targetCoinType.image, SpriteKind.Food)
+            newCoin.data["color"] = targetCoinType.color
+            placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
+        }
+    }
+    // 再生成五個不同顏色的金幣
+    let otherCoinTypes = coinTypes.filter(t => t.color !== targetColor)
+    for (let i = 0; i < 5; i++) {
+        let coinType = otherCoinTypes._pickRandom()
         let newCoin = sprites.create(coinType.image, SpriteKind.Food)
         newCoin.data["color"] = coinType.color
         placeSpriteOnRandomEmptyTile(newCoin, assets.tile`myTile`)
