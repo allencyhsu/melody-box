@@ -413,7 +413,6 @@ playIntroAnimation()
 tiles.setCurrentTilemap(tilemap`level1`)
 
 // 設定玩家
-// melodyBox = sprites.create(assets.image`腳色`, SpriteKind.Player)
 melodyBox = sprites.create(img`
     ..................................................
     ..................................................
@@ -489,7 +488,6 @@ generateInitialCoins()
 
 // 生成敵人
 for (let i = 0; i < 3; i++) {
-    // greyRainbow = sprites.create(assets.image`灰色彩虹`, SpriteKind.Enemy)
     greyRainbow = sprites.create(img`
     ....................
     ....................
